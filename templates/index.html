@@ -12,5 +12,10 @@
         <input type="number" id="number" name="number">
         <input type="submit" value="Add">
     </form>
+    
+    <!-- Form to reset the count -->
+    <form method="post" action="{{ url_for('reset') }}">
+        <input type="submit" value="Reset Count">
+    </form>
 </body>
 </html>

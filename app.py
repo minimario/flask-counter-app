@@ -1,6 +1,6 @@
 # app.py
 import sqlite3
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 
 app = Flask(__name__)
 
@@ -44,6 +44,20 @@ def index():
         running_sum = 0
 
     return render_template('index.html', running_sum=running_sum)
+
+@app.route('/reset', methods=['POST'])
+def reset():
+    # Connect to the database
+    conn = sqlite3.connect('database.db')
+    cursor = conn.cursor()
+
+    # Delete all records from the 'sums' table
+    cursor.execute('DELETE FROM sums')
+    conn.commit()
+    conn.close()
+
+    # Redirect back to the index page after resetting the count
+    return redirect(url_for('index'))
 
 if __name__ == '__main__':
     app.run(debug=True)
